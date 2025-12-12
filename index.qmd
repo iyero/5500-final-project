@@ -5,12 +5,12 @@ subtitle: "Mapping Flood Risk and Population Exposure in Honolulu County"
 
 ::: {.hero-banner}
 # High Tide Ahead
-### Flood Risk and Population Exposure in Honolulu County, Hawaii
+### Flood Risk and Population Exposure on Oahu, Hawaii
 :::
 
 ## Overview
 
-Honolulu County faces significant flood risk from multiple sources: coastal inundation, storm surge, and riverine flooding from the island's numerous streams and waterways. This analysis develops a composite flood risk model for Oahu and estimates population exposure across approximately 980,000 residents.
+Oahu, the most populous island in Honolulu County, faces significant flood risk from multiple sources: coastal inundation, storm surge, and riverine flooding from the island's numerous streams and waterways. This analysis develops a composite flood risk model for Oahu and estimates population exposure across approximately 887,000 residents.
 
 The project combines elevation data, hydrological features, and demographic information to identify flood-prone areas and quantify who lives in harm's way.
 
@@ -18,27 +18,29 @@ The project combines elevation data, hydrological features, and demographic info
 
 ::: {.stat-box .high-risk}
 ::: {.stat-number}
-106,846
+86,462
 :::
-**Residents in High-Risk Areas** (10.9%)
+**Residents in High-Risk Areas** (9.7%)
 Living below 3m elevation or within 100m of inland waterways
 :::
 
 ::: {.stat-box .moderate-risk}
 ::: {.stat-number}
-160,225
+142,190
 :::
-**Residents in Moderate-Risk Areas** (16.4%)
+**Residents in Moderate-Risk Areas** (16.0%)
 Elevation 3-8m or within 100-500m of waterways
 :::
 
 ::: {.stat-box .low-risk}
 ::: {.stat-number}
-686,450
+632,045
 :::
-**Residents in Low-Risk Areas** (70.1%)
+**Residents in Low-Risk Areas** (71.3%)
 Above 8m elevation and more than 500m from waterways
 :::
+
+*Note: Statistics above are for Oahu only. Honolulu County also includes small Northwestern Hawaiian Islands, which are excluded from this analysis.*
 
 ## Study Area
 
@@ -63,8 +65,8 @@ Explore flood risk across Oahu's census block groups. Toggle layers to view risk
 
 | Component | Description |
 |-----------|-------------|
-| **Study Area** | Oahu, Honolulu County (773 census block groups) |
-| **Population** | 979,682 residents |
+| **Study Area** | Oahu, Honolulu County (703 census block groups) |
+| **Population** | 886,849 residents |
 | **Resolution** | 10m grid cells |
 | **Risk Factors** | Elevation (70%), Proximity to waterways (30%) |
 | **Data Sources** | USGS 3DEP, USGS NHD, Census TIGER/ACS |

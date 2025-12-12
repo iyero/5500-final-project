@@ -128,12 +128,12 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#comprehensive-risk-map" id="toc-comprehensive-risk-map" class="nav-link" data-scroll-target="#comprehensive-risk-map">Comprehensive Risk Map</a></li>
   <li><a href="#population-exposure" id="toc-population-exposure" class="nav-link" data-scroll-target="#population-exposure">Population Exposure</a>
   <ul class="collapse">
-  <li><a href="#by-population" id="toc-by-population" class="nav-link" data-scroll-target="#by-population">By Population</a></li>
+  <li><a href="#by-population-oahu-only" id="toc-by-population-oahu-only" class="nav-link" data-scroll-target="#by-population-oahu-only">By Population (Oahu Only)</a></li>
   <li><a href="#by-land-area" id="toc-by-land-area" class="nav-link" data-scroll-target="#by-land-area">By Land Area</a></li>
   </ul></li>
   <li><a href="#dashboard-summary" id="toc-dashboard-summary" class="nav-link" data-scroll-target="#dashboard-summary">Dashboard Summary</a>
   <ul class="collapse">
-  <li><a href="#key-statistics" id="toc-key-statistics" class="nav-link" data-scroll-target="#key-statistics">Key Statistics</a></li>
+  <li><a href="#key-statistics-oahu-only" id="toc-key-statistics-oahu-only" class="nav-link" data-scroll-target="#key-statistics-oahu-only">Key Statistics (Oahu Only)</a></li>
   </ul></li>
   <li><a href="#top-high-risk-areas" id="toc-top-high-risk-areas" class="nav-link" data-scroll-target="#top-high-risk-areas">Top High-Risk Areas</a></li>
   <li><a href="#legend-reference" id="toc-legend-reference" class="nav-link" data-scroll-target="#legend-reference">Legend Reference</a></li>
@@ -195,8 +195,21 @@ ul.task-list li input[type="checkbox"] {
 <figcaption>Population Flood Risk Exposure Analysis</figcaption>
 </figure>
 </div>
-<section id="by-population" class="level3">
-<h3 class="anchored" data-anchor-id="by-population">By Population</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Data Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The figures and statistics below are for <strong>Oahu only</strong>. Honolulu County technically includes small Northwestern Hawaiian Islands, which were filtered out during visualization. The raw CSV files in the repository contain data for all of Honolulu County (773 block groups, 979,682 residents), while the figures shown here are subsetted to Oahu (703 block groups, 886,849 residents).</p>
+</div>
+</div>
+<section id="by-population-oahu-only" class="level3">
+<h3 class="anchored" data-anchor-id="by-population-oahu-only">By Population (Oahu Only)</h3>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -208,22 +221,22 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td>High</td>
-<td>106,846</td>
-<td>10.9%</td>
+<td>86,462</td>
+<td>9.7%</td>
 </tr>
 <tr class="even">
 <td>Moderate</td>
-<td>160,225</td>
-<td>16.4%</td>
+<td>142,190</td>
+<td>16.0%</td>
 </tr>
 <tr class="odd">
 <td>Low</td>
-<td>686,450</td>
-<td>70.1%</td>
+<td>632,045</td>
+<td>71.3%</td>
 </tr>
 <tr class="even">
 <td><strong>Total</strong></td>
-<td><strong>979,682</strong></td>
+<td><strong>886,849</strong></td>
 <td><strong>100%</strong></td>
 </tr>
 </tbody>
@@ -264,13 +277,13 @@ ul.task-list li input[type="checkbox"] {
 <figcaption>Flood Risk Dashboard</figcaption>
 </figure>
 </div>
-<section id="key-statistics" class="level3">
-<h3 class="anchored" data-anchor-id="key-statistics">Key Statistics</h3>
+<section id="key-statistics-oahu-only" class="level3">
+<h3 class="anchored" data-anchor-id="key-statistics-oahu-only">Key Statistics (Oahu Only)</h3>
 <ul>
-<li><strong>Total Population Analyzed:</strong> 979,682</li>
-<li><strong>High Risk Exposure:</strong> 106,846 (10.9%)</li>
-<li><strong>Block Groups Analyzed:</strong> 773</li>
-<li><strong>Mean Risk Score:</strong> 1.39 / 3.0</li>
+<li><strong>Total Population Analyzed:</strong> 886,849</li>
+<li><strong>High Risk Exposure:</strong> 86,462 (9.7%)</li>
+<li><strong>Block Groups Analyzed:</strong> 703</li>
+<li><strong>Mean Risk Score:</strong> 1.37 / 3.0</li>
 </ul>
 </section>
 </section>
@@ -348,16 +361,16 @@ ul.task-list li input[type="checkbox"] {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Summary Findings
+<span class="screen-reader-only">Important</span>Summary Findings (Oahu Only)
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <ol type="1">
-<li><strong>106,846 residents</strong> (10.9% of the population) live in high flood risk areas</li>
+<li><strong>86,462 residents</strong> (9.7% of Oahu’s population) live in high flood risk areas</li>
 <li>High-risk areas concentrate along the <strong>southern coastal plain</strong> and <strong>windward valley floors</strong></li>
 <li>The <strong>elevation component</strong> drives most of the risk classification on this island geography</li>
 <li><strong>Stream proximity</strong> adds localized high-risk corridors inland from the coast</li>
-<li>Mean risk score of <strong>1.39</strong> indicates most block groups are relatively low-risk</li>
+<li>Mean risk score of <strong>1.37</strong> indicates most block groups are relatively low-risk</li>
 </ol>
 </div>
 </div>

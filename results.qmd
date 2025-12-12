@@ -21,14 +21,19 @@ The top 5 highest-risk block groups are marked with stars. High-risk areas conce
 
 ![Population Flood Risk Exposure Analysis](outputs/figures/population_exposure.png)
 
-### By Population
+::: {.callout-note}
+## Data Note
+The figures and statistics below are for **Oahu only**. Honolulu County technically includes small Northwestern Hawaiian Islands, which were filtered out during visualization. The raw CSV files in the repository contain data for all of Honolulu County (773 block groups, 979,682 residents), while the figures shown here are subsetted to Oahu (703 block groups, 886,849 residents).
+:::
+
+### By Population (Oahu Only)
 
 | Risk Category | Population | Percent |
 |---------------|------------|---------|
-| High | 106,846 | 10.9% |
-| Moderate | 160,225 | 16.4% |
-| Low | 686,450 | 70.1% |
-| **Total** | **979,682** | **100%** |
+| High | 86,462 | 9.7% |
+| Moderate | 142,190 | 16.0% |
+| Low | 632,045 | 71.3% |
+| **Total** | **886,849** | **100%** |
 
 ### By Land Area
 
@@ -44,12 +49,12 @@ The disparity between land area and population percentages reflects that high-ri
 
 ![Flood Risk Dashboard](outputs/figures/11_dashboard_summary.png)
 
-### Key Statistics
+### Key Statistics (Oahu Only)
 
-- **Total Population Analyzed:** 979,682
-- **High Risk Exposure:** 106,846 (10.9%)
-- **Block Groups Analyzed:** 773
-- **Mean Risk Score:** 1.39 / 3.0
+- **Total Population Analyzed:** 886,849
+- **High Risk Exposure:** 86,462 (9.7%)
+- **Block Groups Analyzed:** 703
+- **Mean Risk Score:** 1.37 / 3.0
 
 ## Top High-Risk Areas
 
@@ -84,13 +89,13 @@ The interactive map allows detailed exploration of flood risk across Oahu. Featu
 ## Key Takeaways
 
 ::: {.callout-important}
-## Summary Findings
+## Summary Findings (Oahu Only)
 
-1. **106,846 residents** (10.9% of the population) live in high flood risk areas
+1. **86,462 residents** (9.7% of Oahu's population) live in high flood risk areas
 2. High-risk areas concentrate along the **southern coastal plain** and **windward valley floors**
 3. The **elevation component** drives most of the risk classification on this island geography
 4. **Stream proximity** adds localized high-risk corridors inland from the coast
-5. Mean risk score of **1.39** indicates most block groups are relatively low-risk
+5. Mean risk score of **1.37** indicates most block groups are relatively low-risk
 :::
 
 ## Limitations

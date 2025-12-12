@@ -39,14 +39,14 @@
     "href": "results.html#population-exposure",
     "title": "Results",
     "section": "Population Exposure",
-    "text": "Population Exposure\n\n\n\nPopulation Flood Risk Exposure Analysis\n\n\n\nBy Population\n\n\n\nRisk Category\nPopulation\nPercent\n\n\n\n\nHigh\n106,846\n10.9%\n\n\nModerate\n160,225\n16.4%\n\n\nLow\n686,450\n70.1%\n\n\nTotal\n979,682\n100%\n\n\n\n\n\nBy Land Area\n\n\n\nRisk Category\nPercent of Land\n\n\n\n\nHigh\n28.8%\n\n\nModerate\n12.2%\n\n\nLow\n59.1%\n\n\n\nThe disparity between land area and population percentages reflects that high-risk coastal areas tend to be less densely populated than inland urban zones."
+    "text": "Population Exposure\n\n\n\nPopulation Flood Risk Exposure Analysis\n\n\n\n\n\n\n\n\nNoteData Note\n\n\n\nThe figures and statistics below are for Oahu only. Honolulu County technically includes small Northwestern Hawaiian Islands, which were filtered out during visualization. The raw CSV files in the repository contain data for all of Honolulu County (773 block groups, 979,682 residents), while the figures shown here are subsetted to Oahu (703 block groups, 886,849 residents).\n\n\n\nBy Population (Oahu Only)\n\n\n\nRisk Category\nPopulation\nPercent\n\n\n\n\nHigh\n86,462\n9.7%\n\n\nModerate\n142,190\n16.0%\n\n\nLow\n632,045\n71.3%\n\n\nTotal\n886,849\n100%\n\n\n\n\n\nBy Land Area\n\n\n\nRisk Category\nPercent of Land\n\n\n\n\nHigh\n28.8%\n\n\nModerate\n12.2%\n\n\nLow\n59.1%\n\n\n\nThe disparity between land area and population percentages reflects that high-risk coastal areas tend to be less densely populated than inland urban zones."
   },
   {
     "objectID": "results.html#dashboard-summary",
     "href": "results.html#dashboard-summary",
     "title": "Results",
     "section": "Dashboard Summary",
-    "text": "Dashboard Summary\n\n\n\nFlood Risk Dashboard\n\n\n\nKey Statistics\n\nTotal Population Analyzed: 979,682\nHigh Risk Exposure: 106,846 (10.9%)\nBlock Groups Analyzed: 773\nMean Risk Score: 1.39 / 3.0"
+    "text": "Dashboard Summary\n\n\n\nFlood Risk Dashboard\n\n\n\nKey Statistics (Oahu Only)\n\nTotal Population Analyzed: 886,849\nHigh Risk Exposure: 86,462 (9.7%)\nBlock Groups Analyzed: 703\nMean Risk Score: 1.37 / 3.0"
   },
   {
     "objectID": "results.html#top-high-risk-areas",
@@ -74,7 +74,7 @@
     "href": "results.html#key-takeaways",
     "title": "Results",
     "section": "Key Takeaways",
-    "text": "Key Takeaways\n\n\n\n\n\n\nImportantSummary Findings\n\n\n\n\n106,846 residents (10.9% of the population) live in high flood risk areas\nHigh-risk areas concentrate along the southern coastal plain and windward valley floors\nThe elevation component drives most of the risk classification on this island geography\nStream proximity adds localized high-risk corridors inland from the coast\nMean risk score of 1.39 indicates most block groups are relatively low-risk"
+    "text": "Key Takeaways\n\n\n\n\n\n\nImportantSummary Findings (Oahu Only)\n\n\n\n\n86,462 residents (9.7% of Oahu’s population) live in high flood risk areas\nHigh-risk areas concentrate along the southern coastal plain and windward valley floors\nThe elevation component drives most of the risk classification on this island geography\nStream proximity adds localized high-risk corridors inland from the coast\nMean risk score of 1.37 indicates most block groups are relatively low-risk"
   },
   {
     "objectID": "results.html#limitations",
@@ -88,14 +88,14 @@
     "href": "index.html#overview",
     "title": "High Tide Ahead",
     "section": "Overview",
-    "text": "Overview\nHonolulu County faces significant flood risk from multiple sources: coastal inundation, storm surge, and riverine flooding from the island’s numerous streams and waterways. This analysis develops a composite flood risk model for Oahu and estimates population exposure across approximately 980,000 residents.\nThe project combines elevation data, hydrological features, and demographic information to identify flood-prone areas and quantify who lives in harm’s way."
+    "text": "Overview\nOahu, the most populous island in Honolulu County, faces significant flood risk from multiple sources: coastal inundation, storm surge, and riverine flooding from the island’s numerous streams and waterways. This analysis develops a composite flood risk model for Oahu and estimates population exposure across approximately 887,000 residents.\nThe project combines elevation data, hydrological features, and demographic information to identify flood-prone areas and quantify who lives in harm’s way."
   },
   {
     "objectID": "index.html#key-findings",
     "href": "index.html#key-findings",
     "title": "High Tide Ahead",
     "section": "Key Findings",
-    "text": "Key Findings\n\n\n106,846\n\nResidents in High-Risk Areas (10.9%) Living below 3m elevation or within 100m of inland waterways\n\n\n\n160,225\n\nResidents in Moderate-Risk Areas (16.4%) Elevation 3-8m or within 100-500m of waterways\n\n\n\n686,450\n\nResidents in Low-Risk Areas (70.1%) Above 8m elevation and more than 500m from waterways"
+    "text": "Key Findings\n\n\n86,462\n\nResidents in High-Risk Areas (9.7%) Living below 3m elevation or within 100m of inland waterways\n\n\n\n142,190\n\nResidents in Moderate-Risk Areas (16.0%) Elevation 3-8m or within 100-500m of waterways\n\n\n\n632,045\n\nResidents in Low-Risk Areas (71.3%) Above 8m elevation and more than 500m from waterways\n\nNote: Statistics above are for Oahu only. Honolulu County also includes small Northwestern Hawaiian Islands, which are excluded from this analysis."
   },
   {
     "objectID": "index.html#study-area",
@@ -116,7 +116,7 @@
     "href": "index.html#project-summary",
     "title": "High Tide Ahead",
     "section": "Project Summary",
-    "text": "Project Summary\n\n\n\nComponent\nDescription\n\n\n\n\nStudy Area\nOahu, Honolulu County (773 census block groups)\n\n\nPopulation\n979,682 residents\n\n\nResolution\n10m grid cells\n\n\nRisk Factors\nElevation (70%), Proximity to waterways (30%)\n\n\nData Sources\nUSGS 3DEP, USGS NHD, Census TIGER/ACS"
+    "text": "Project Summary\n\n\n\nComponent\nDescription\n\n\n\n\nStudy Area\nOahu, Honolulu County (703 census block groups)\n\n\nPopulation\n886,849 residents\n\n\nResolution\n10m grid cells\n\n\nRisk Factors\nElevation (70%), Proximity to waterways (30%)\n\n\nData Sources\nUSGS 3DEP, USGS NHD, Census TIGER/ACS"
   },
   {
     "objectID": "index.html#navigation",
