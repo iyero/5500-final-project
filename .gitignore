@@ -9,9 +9,6 @@ data/
 outputs/maps/
 outputs/data/
 
-# Generated docs (regenerate with quarto render)
-docs/
-
 # Quarto cache
 .quarto/
 
@@ -38,9 +35,12 @@ Thumbs.db
 # ===========================================
 # WHAT GETS UPLOADED (everything else):
 # - *.qmd files (Quarto source)
-# - *.ipynb files (notebooks) 
+# - *.ipynb files (notebooks)
 # - _quarto.yml, styles.css
 # - outputs/figures/*.png
 # - README.md
 # - .gitignore
 # ===========================================
+
+/.quarto/
+**/*.quarto_ipynb

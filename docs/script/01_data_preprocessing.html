@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>data_preprocessing – High Tide Ahead</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-a53b728559d266de2f2f6fd3e95d17f3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">High Tide Ahead</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../methodology.html"> 
+<span class="menu-text">Methodology</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../results.html"> 
+<span class="menu-text">Results</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+<div id="5df9654a-cdb5-4f2a-9246-51e1e4267ff4" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data manipulation and analysis</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely.geometry <span class="im">import</span> Point, Polygon, box</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Raster processing</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rasterio</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterio.mask <span class="im">import</span> mask</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterio.warp <span class="im">import</span> calculate_default_transform, reproject</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterio.enums <span class="im">import</span> Resampling</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterio.features <span class="im">import</span> rasterize</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualization</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># System</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Set style</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">"whitegrid"</span>)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.figsize'</span>] <span class="op">=</span> (<span class="dv">12</span>, <span class="dv">8</span>)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"✓ All libraries imported successfully"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>✓ All libraries imported successfully</code></pre>
+</div>
+</div>
+<div id="d82ec303-0f24-4e3c-98a6-65cacab92962" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create directory structure</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>directories <span class="op">=</span> [</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'data/raw'</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'data/processed'</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'outputs/maps'</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'outputs/figures'</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'outputs/data'</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> directory <span class="kw">in</span> directories:</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    Path(directory).mkdir(parents<span class="op">=</span><span class="va">True</span>, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"✓ Directory structure created"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>✓ Directory structure created</code></pre>
+</div>
+</div>
+<div id="53db8b52-86a5-487f-8fed-65bf57999942" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define file paths - UPDATED WITH YOUR ACTUAL FILENAMES</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>RAW_DATA <span class="op">=</span> {</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'waterways'</span>: <span class="st">'data/raw/Streams.shp'</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'lines'</span>: <span class="st">'data/raw/Coastline.shp'</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'census_bg'</span>: <span class="st">'data/raw/tl_2020_15_bg.shp'</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'counties'</span>: <span class="st">'data/raw/tl_2024_us_county.shp'</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'dem'</span>: <span class="st">'data/raw/Oahu_DSM.tif'</span>  <span class="co"># Update if different</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Target CRS for Honolulu (NAD83 / Hawaii zone 3)</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>TARGET_CRS <span class="op">=</span> <span class="st">'EPSG:3759'</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Honolulu County FIPS code</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>HONOLULU_FIPS <span class="op">=</span> <span class="st">'15003'</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"✓ File paths configured"</span>)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"✓ Target CRS: </span><span class="sc">{</span>TARGET_CRS<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>✓ File paths configured
+✓ Target CRS: EPSG:3759</code></pre>
+</div>
+</div>
+<div id="9da48fe7-f4bb-4353-856d-1640474dd523" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load county boundaries</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Loading county boundaries..."</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>counties <span class="op">=</span> gpd.read_file(RAW_DATA[<span class="st">'counties'</span>])</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for Honolulu County</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>honolulu <span class="op">=</span> counties[counties[<span class="st">'GEOID'</span>] <span class="op">==</span> HONOLULU_FIPS].copy()</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">len</span>(honolulu) <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"⚠️ Warning: No Honolulu County found. Available GEOID values:"</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(counties[counties[<span class="st">'STATEFP'</span>] <span class="op">==</span> <span class="st">'15'</span>][<span class="st">'GEOID'</span>].values)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"✓ Honolulu County loaded: </span><span class="sc">{</span>honolulu[<span class="st">'NAME'</span>]<span class="sc">.</span>values[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  Original CRS: </span><span class="sc">{</span>honolulu<span class="sc">.</span>crs<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  Geometry type: </span><span class="sc">{</span>honolulu<span class="sc">.</span>geometry<span class="sc">.</span><span class="bu">type</span><span class="sc">.</span>values[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Reproject to target CRS</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>honolulu <span class="op">=</span> honolulu.to_crs(TARGET_CRS)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"✓ Reprojected to </span><span class="sc">{</span>TARGET_CRS<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Save processed boundary</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>honolulu.to_file(<span class="st">'data/processed/honolulu_boundary.shp'</span>)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"✓ Saved: data/processed/honolulu_boundary.shp"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Loading county boundaries...
+✓ Honolulu County loaded: Honolulu
+  Original CRS: EPSG:4269
+  Geometry type: MultiPolygon
+✓ Reprojected to EPSG:3759
+✓ Saved: data/processed/honolulu_boundary.shp</code></pre>
+</div>
+</div>
+<div id="d5e47844-3994-4514-83ed-e43cf7247eb0" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize Honolulu County boundary</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>honolulu.plot(ax<span class="op">=</span>ax, facecolor<span class="op">=</span><span class="st">'lightblue'</span>, edgecolor<span class="op">=</span><span class="st">'navy'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Study Area: Honolulu County, Hawaii'</span>, fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Easting (m)'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Northing (m)'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'outputs/figures/01_study_area.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"✓ Study area bounds: </span><span class="sc">{</span>honolulu<span class="sc">.</span>total_bounds<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01_data_preprocessing_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>✓ Study area bounds: [-5007795.82807378    11870.19523467  1777498.79143474  3246934.66955564]</code></pre>
+</div>
+</div>
+<div id="3ef1321e-a66d-4e91-8a1e-39be55f6b291" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load waterways</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Loading waterways..."</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>waterways <span class="op">=</span> gpd.read_file(RAW_DATA[<span class="st">'waterways'</span>])</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  Loaded </span><span class="sc">{</span><span class="bu">len</span>(waterways)<span class="sc">}</span><span class="ss"> waterway features"</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  Original CRS: </span><span class="sc">{</span>waterways<span class="sc">.</span>crs<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Reproject and clip to Honolulu</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>waterways <span class="op">=</span> waterways.to_crs(TARGET_CRS)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>waterways_honolulu <span class="op">=</span> gpd.clip(waterways, honolulu)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"✓ Clipped to Honolulu: </span><span class="sc">{</span><span class="bu">len</span>(waterways_honolulu)<span class="sc">}</span><span class="ss"> features remaining"</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Save processed waterways</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>waterways_honolulu.to_file(<span class="st">'data/processed/waterways_honolulu.shp'</span>)</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"✓ Saved: data/processed/waterways_honolulu.shp"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Loading waterways...
+  Loaded 10785 waterway features
+  Original CRS: EPSG:3750
+✓ Clipped to Honolulu: 2340 features remaining
+✓ Saved: data/processed/waterways_honolulu.shp</code></pre>
+</div>
+</div>
+<div id="cc607e58-5f1e-4742-a0cd-616669da31c1" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load lines (assuming these are coastlines or additional water features)</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Loading lines..."</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>lines <span class="op">=</span> gpd.read_file(RAW_DATA[<span class="st">'lines'</span>])</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  Loaded </span><span class="sc">{</span><span class="bu">len</span>(lines)<span class="sc">}</span><span class="ss"> line features"</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  Original CRS: </span><span class="sc">{</span>lines<span class="sc">.</span>crs<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Reproject and clip to Honolulu</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>lines <span class="op">=</span> lines.to_crs(TARGET_CRS)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>lines_honolulu <span class="op">=</span> gpd.clip(lines, honolulu)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"✓ Clipped to Honolulu: </span><span class="sc">{</span><span class="bu">len</span>(lines_honolulu)<span class="sc">}</span><span class="ss"> features remaining"</span>)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Save processed lines</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>lines_honolulu.to_file(<span class="st">'data/processed/lines_honolulu.shp'</span>)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"✓ Saved: data/processed/lines_honolulu.shp"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Loading lines...
+  Loaded 13 line features
+  Original CRS: EPSG:3750
+✓ Clipped to Honolulu: 4 features remaining
+✓ Saved: data/processed/lines_honolulu.shp</code></pre>
+</div>
+</div>
+<div id="d834b8ec-6ec5-4cea-8e20-fcee981ae1a2" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load census block groups</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Loading census block groups..."</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>census_bg <span class="op">=</span> gpd.read_file(RAW_DATA[<span class="st">'census_bg'</span>])</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  Loaded </span><span class="sc">{</span><span class="bu">len</span>(census_bg)<span class="sc">}</span><span class="ss"> block groups"</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  Original CRS: </span><span class="sc">{</span>census_bg<span class="sc">.</span>crs<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for Honolulu County (COUNTYFP == '003')</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>census_bg_honolulu <span class="op">=</span> census_bg[census_bg[<span class="st">'COUNTYFP'</span>] <span class="op">==</span> <span class="st">'003'</span>].copy()</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"✓ Filtered to Honolulu: </span><span class="sc">{</span><span class="bu">len</span>(census_bg_honolulu)<span class="sc">}</span><span class="ss"> block groups"</span>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Reproject to target CRS</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>census_bg_honolulu <span class="op">=</span> census_bg_honolulu.to_crs(TARGET_CRS)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"✓ Reprojected to </span><span class="sc">{</span>TARGET_CRS<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Display available columns</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Available census columns:"</span>)</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(census_bg_honolulu.columns.tolist())</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Save processed census data</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>census_bg_honolulu.to_file(<span class="st">'data/processed/census_bg_honolulu.shp'</span>)</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"✓ Saved: data/processed/census_bg_honolulu.shp"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Loading census block groups...
+  Loaded 1083 block groups
+  Original CRS: EPSG:4269
+✓ Filtered to Honolulu: 774 block groups
+✓ Reprojected to EPSG:3759
+
+Available census columns:
+['STATEFP', 'COUNTYFP', 'TRACTCE', 'BLKGRPCE', 'GEOID', 'NAMELSAD', 'MTFCC', 'FUNCSTAT', 'ALAND', 'AWATER', 'INTPTLAT', 'INTPTLON', 'geometry']
+✓ Saved: data/processed/census_bg_honolulu.shp</code></pre>
+</div>
+</div>
+<div id="7e190b0a-3324-46ab-be61-0718a3160125" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"IMPORTANT: You need to add population data"</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Options:"</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"1. Download ACS 2020 5-year estimates from data.census.gov"</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"2. Use tidycensus in R or censusdata in Python"</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"3. Manually join population data to census_bg_honolulu"</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>census_bg_honolulu[<span class="st">'total_population'</span>] <span class="op">=</span> np.random.randint(<span class="dv">500</span>, <span class="dv">5000</span>, <span class="bu">len</span>(census_bg_honolulu))</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"⚠️ Using synthetic population data for demonstration"</span>)</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"✓ Total population (synthetic): </span><span class="sc">{</span>census_bg_honolulu[<span class="st">'total_population'</span>]<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:,}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>⚠️ IMPORTANT: You need to add population data
+Options:
+1. Download ACS 2020 5-year estimates from data.census.gov
+2. Use tidycensus in R or censusdata in Python
+3. Manually join population data to census_bg_honolulu
+⚠️ Using synthetic population data for demonstration
+✓ Total population (synthetic): 2,163,336</code></pre>
+</div>
+</div>
+<div id="236daf82-917d-4efd-98f7-e82a3f6e60bb" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load and process DEM</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Loading DEM..."</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> rasterio.<span class="bu">open</span>(RAW_DATA[<span class="st">'dem'</span>]) <span class="im">as</span> src:</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  DEM CRS: </span><span class="sc">{</span>src<span class="sc">.</span>crs<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  DEM shape: </span><span class="sc">{</span>src<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  DEM resolution: </span><span class="sc">{</span>src<span class="sc">.</span>res<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  DEM bounds: </span><span class="sc">{</span>src<span class="sc">.</span>bounds<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Reproject Honolulu boundary to DEM CRS for clipping</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    honolulu_dem_crs <span class="op">=</span> honolulu.to_crs(src.crs)</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Clip DEM to Honolulu boundary</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    geom <span class="op">=</span> [honolulu_dem_crs.geometry.values[<span class="dv">0</span>]]</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    out_image, out_transform <span class="op">=</span> mask(src, geom, crop<span class="op">=</span><span class="va">True</span>, nodata<span class="op">=-</span><span class="dv">9999</span>)</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    out_meta <span class="op">=</span> src.meta.copy()</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    out_meta.update({</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">"driver"</span>: <span class="st">"GTiff"</span>,</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">"height"</span>: out_image.shape[<span class="dv">1</span>],</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">"width"</span>: out_image.shape[<span class="dv">2</span>],</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">"transform"</span>: out_transform,</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">"nodata"</span>: <span class="op">-</span><span class="dv">9999</span></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Save clipped DEM in original CRS</span></span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>clipped_dem_path <span class="op">=</span> <span class="st">'data/processed/dem_honolulu_original_crs.tif'</span></span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> rasterio.<span class="bu">open</span>(clipped_dem_path, <span class="st">'w'</span>, <span class="op">**</span>out_meta) <span class="im">as</span> dest:</span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>    dest.write(out_image)</span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"✓ Clipped DEM saved: </span><span class="sc">{</span>clipped_dem_path<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Loading DEM...
+  DEM CRS: EPSG:3750
+  DEM shape: (52328, 67407)
+  DEM resolution: (1.0, 1.0)
+  DEM bounds: BoundingBox(left=573085.9947693374, bottom=2350512.550161029, right=640492.9947693374, top=2402840.550161029)
+✓ Clipped DEM saved: data/processed/dem_honolulu_original_crs.tif</code></pre>
+</div>
+</div>
+<div id="cd7803ff-3b80-470c-bffc-dcf7724dc9c7" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reproject DEM to target CRS (EPSG:3759)</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Reprojecting DEM to </span><span class="sc">{</span>TARGET_CRS<span class="sc">}</span><span class="ss">..."</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> rasterio.<span class="bu">open</span>(clipped_dem_path) <span class="im">as</span> src:</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate optimal transform and dimensions</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    transform, width, height <span class="op">=</span> calculate_default_transform(</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>        src.crs, TARGET_CRS, src.width, src.height, <span class="op">*</span>src.bounds</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    kwargs <span class="op">=</span> src.meta.copy()</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    kwargs.update({</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">'crs'</span>: TARGET_CRS,</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">'transform'</span>: transform,</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">'width'</span>: width,</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">'height'</span>: height</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Reproject and save</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>    reprojected_dem_path <span class="op">=</span> <span class="st">'data/processed/dem_honolulu.tif'</span></span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> rasterio.<span class="bu">open</span>(reprojected_dem_path, <span class="st">'w'</span>, <span class="op">**</span>kwargs) <span class="im">as</span> dst:</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, src.count <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>            reproject(</span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>                source<span class="op">=</span>rasterio.band(src, i),</span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>                destination<span class="op">=</span>rasterio.band(dst, i),</span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>                src_transform<span class="op">=</span>src.transform,</span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>                src_crs<span class="op">=</span>src.crs,</span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>                dst_transform<span class="op">=</span>transform,</span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>                dst_crs<span class="op">=</span>TARGET_CRS,</span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>                resampling<span class="op">=</span>Resampling.bilinear</span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"✓ Reprojected DEM saved: </span><span class="sc">{</span>reprojected_dem_path<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify reprojected DEM</span></span>
+<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> rasterio.<span class="bu">open</span>(reprojected_dem_path) <span class="im">as</span> src:</span>
+<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  Final CRS: </span><span class="sc">{</span>src<span class="sc">.</span>crs<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb21-37"><a href="#cb21-37" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  Final shape: </span><span class="sc">{</span>src<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb21-38"><a href="#cb21-38" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  Final resolution: </span><span class="sc">{</span>src<span class="sc">.</span>res<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reprojecting DEM to EPSG:3759...
+✓ Reprojected DEM saved: data/processed/dem_honolulu.tif
+  Final CRS: EPSG:3759
+  Final shape: (52758, 67740)
+  Final resolution: (3.281650196067137, 3.281650196067137)</code></pre>
+</div>
+</div>
+<div id="3b906ef0-5c8e-482d-b086-8544f675ba1c" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create comprehensive visualization</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">10</span>))</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot DEM</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> rasterio.<span class="bu">open</span>(reprojected_dem_path) <span class="im">as</span> src:</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    dem_data <span class="op">=</span> src.read(<span class="dv">1</span>)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    dem_data <span class="op">=</span> np.where(dem_data <span class="op">==</span> <span class="op">-</span><span class="dv">9999</span>, np.nan, dem_data)</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    <span class="im">from</span> rasterio.plot <span class="im">import</span> show</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    show(dem_data, transform<span class="op">=</span>src.transform, ax<span class="op">=</span>ax, cmap<span class="op">=</span><span class="st">'terrain'</span>, </span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>         vmin<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span>np.nanpercentile(dem_data, <span class="dv">99</span>))</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Overlay vector data</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>waterways_honolulu.plot(ax<span class="op">=</span>ax, color<span class="op">=</span><span class="st">'blue'</span>, linewidth<span class="op">=</span><span class="dv">1</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, label<span class="op">=</span><span class="st">'Waterways'</span>)</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>lines_honolulu.plot(ax<span class="op">=</span>ax, color<span class="op">=</span><span class="st">'darkblue'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, alpha<span class="op">=</span><span class="fl">0.8</span>, label<span class="op">=</span><span class="st">'Coastline/Lines'</span>)</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>census_bg_honolulu.boundary.plot(ax<span class="op">=</span>ax, color<span class="op">=</span><span class="st">'red'</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="st">'Census Block Groups'</span>)</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>honolulu.boundary.plot(ax<span class="op">=</span>ax, color<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="dv">3</span>, label<span class="op">=</span><span class="st">'County Boundary'</span>)</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Honolulu County: Processed Spatial Data'</span>, fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Easting (m)'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Northing (m)'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>ax.legend(loc<span class="op">=</span><span class="st">'upper right'</span>)</span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'outputs/figures/02_all_processed_data.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"✓ Data preprocessing complete!"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">MemoryError</span>                               Traceback (most recent call last)
+<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[12]</span><span class="ansi-green-fg">, line 11</span>
+<span class="ansi-green-fg">      7</span>     dem_data = np.where(dem_data == -<span class="ansi-green-fg">9999</span>, np.nan, dem_data)
+<span class="ansi-green-fg">      9</span>     <span style="font-weight:bold;color:rgb(0,135,0)">from</span><span style="color:rgb(188,188,188)"> </span><span class="ansi-blue-fg ansi-bold">rasterio</span><span class="ansi-blue-fg ansi-bold">.</span><span class="ansi-blue-fg ansi-bold">plot</span><span style="color:rgb(188,188,188)"> </span><span style="font-weight:bold;color:rgb(0,135,0)">import</span> show
+<span class="ansi-green-fg">     10</span>     show(dem_data, transform=src.transform, ax=ax, cmap=<span class="ansi-yellow-fg">'</span><span class="ansi-yellow-fg">terrain</span><span class="ansi-yellow-fg">'</span>, 
+<span class="ansi-green-fg">---&gt; </span><span class="ansi-green-fg">11</span>          vmin=<span class="ansi-green-fg">0</span>, vmax=np.nanpercentile(dem_data, <span class="ansi-green-fg">99</span>))
+<span class="ansi-green-fg">     13</span> <span style="font-style:italic;color:rgb(95,135,135)"># Overlay vector data</span>
+<span class="ansi-green-fg">     14</span> waterways_honolulu.plot(ax=ax, color=<span class="ansi-yellow-fg">'</span><span class="ansi-yellow-fg">blue</span><span class="ansi-yellow-fg">'</span>, linewidth=<span class="ansi-green-fg">1</span>, alpha=<span class="ansi-green-fg">0.6</span>, label=<span class="ansi-yellow-fg">'</span><span class="ansi-yellow-fg">Waterways</span><span class="ansi-yellow-fg">'</span>)
+
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~\anaconda3\envs\geospatial\Lib\site-packages\numpy\lib\_nanfunctions_impl.py:1406</span>, in <span class="ansi-cyan-fg">nanpercentile</span><span class="ansi-blue-fg">(a, q, axis, out, overwrite_input, method, keepdims, weights, interpolation)</span>
+<span class="ansi-green-fg">   1403</span>     <span style="font-weight:bold;color:rgb(0,135,0)">if</span> np.any(weights &lt; <span class="ansi-green-fg">0</span>):
+<span class="ansi-green-fg">   1404</span>         <span style="font-weight:bold;color:rgb(0,135,0)">raise</span> <span style="font-weight:bold;color:rgb(215,95,95)">ValueError</span>(<span class="ansi-yellow-fg">"</span><span class="ansi-yellow-fg">Weights must be non-negative.</span><span class="ansi-yellow-fg">"</span>)
+<span class="ansi-green-fg">-&gt; </span><span class="ansi-green-fg">1406</span> <span style="font-weight:bold;color:rgb(0,135,0)">return</span> _nanquantile_unchecked(
+<span class="ansi-green-fg">   1407</span>     a, q, axis, out, overwrite_input, method, keepdims, weights)
+
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~\anaconda3\envs\geospatial\Lib\site-packages\numpy\lib\_nanfunctions_impl.py:1617</span>, in <span class="ansi-cyan-fg">_nanquantile_unchecked</span><span class="ansi-blue-fg">(a, q, axis, out, overwrite_input, method, keepdims, weights)</span>
+<span class="ansi-green-fg">   1615</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> a.size == <span class="ansi-green-fg">0</span>:
+<span class="ansi-green-fg">   1616</span>     <span style="font-weight:bold;color:rgb(0,135,0)">return</span> np.nanmean(a, axis, out=out, keepdims=keepdims)
+<span class="ansi-green-fg">-&gt; </span><span class="ansi-green-fg">1617</span> <span style="font-weight:bold;color:rgb(0,135,0)">return</span> fnb._ureduce(a,
+<span class="ansi-green-fg">   1618</span>                     func=_nanquantile_ureduce_func,
+<span class="ansi-green-fg">   1619</span>                     q=q,
+<span class="ansi-green-fg">   1620</span>                     weights=weights,
+<span class="ansi-green-fg">   1621</span>                     keepdims=keepdims,
+<span class="ansi-green-fg">   1622</span>                     axis=axis,
+<span class="ansi-green-fg">   1623</span>                     out=out,
+<span class="ansi-green-fg">   1624</span>                     overwrite_input=overwrite_input,
+<span class="ansi-green-fg">   1625</span>                     method=method)
+
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~\anaconda3\envs\geospatial\Lib\site-packages\numpy\lib\_function_base_impl.py:3914</span>, in <span class="ansi-cyan-fg">_ureduce</span><span class="ansi-blue-fg">(a, func, keepdims, **kwargs)</span>
+<span class="ansi-green-fg">   3911</span>     index_out = (<span class="ansi-green-fg">0</span>, ) * nd
+<span class="ansi-green-fg">   3912</span>     kwargs[<span class="ansi-yellow-fg">'</span><span class="ansi-yellow-fg">out</span><span class="ansi-yellow-fg">'</span>] = out[(<span style="color:rgb(0,135,0)">Ellipsis</span>, ) + index_out]
+<span class="ansi-green-fg">-&gt; </span><span class="ansi-green-fg">3914</span> r = func(a, **kwargs)
+<span class="ansi-green-fg">   3916</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> out <span style="font-weight:bold;color:rgb(175,0,255)">is</span> <span style="font-weight:bold;color:rgb(175,0,255)">not</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>:
+<span class="ansi-green-fg">   3917</span>     <span style="font-weight:bold;color:rgb(0,135,0)">return</span> out
+
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~\anaconda3\envs\geospatial\Lib\site-packages\numpy\lib\_nanfunctions_impl.py:1645</span>, in <span class="ansi-cyan-fg">_nanquantile_ureduce_func</span><span class="ansi-blue-fg">(a, q, weights, axis, out, overwrite_input, method)</span>
+<span class="ansi-green-fg">   1643</span>     part = a.ravel()
+<span class="ansi-green-fg">   1644</span>     wgt = <span style="font-weight:bold;color:rgb(0,135,0)">None</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> weights <span style="font-weight:bold;color:rgb(175,0,255)">is</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span> <span style="font-weight:bold;color:rgb(0,135,0)">else</span> weights.ravel()
+<span class="ansi-green-fg">-&gt; </span><span class="ansi-green-fg">1645</span>     result = _nanquantile_1d(part, q, overwrite_input, method, weights=wgt)
+<span class="ansi-green-fg">   1646</span> <span style="font-style:italic;color:rgb(95,135,135)"># Note that this code could try to fill in `out` right away</span>
+<span class="ansi-green-fg">   1647</span> <span style="font-weight:bold;color:rgb(0,135,0)">elif</span> weights <span style="font-weight:bold;color:rgb(175,0,255)">is</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>:
+
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~\anaconda3\envs\geospatial\Lib\site-packages\numpy\lib\_nanfunctions_impl.py:1690</span>, in <span class="ansi-cyan-fg">_nanquantile_1d</span><span class="ansi-blue-fg">(arr1d, q, overwrite_input, method, weights)</span>
+<span class="ansi-green-fg">   1685</span> <span style="font-style:italic" class="ansi-yellow-fg">"""</span>
+<span class="ansi-green-fg">   1686</span> <span style="font-style:italic" class="ansi-yellow-fg">Private function for rank 1 arrays. Compute quantile ignoring NaNs.</span>
+<span class="ansi-green-fg">   1687</span> <span style="font-style:italic" class="ansi-yellow-fg">See nanpercentile for parameter usage</span>
+<span class="ansi-green-fg">   1688</span> <span style="font-style:italic" class="ansi-yellow-fg">"""</span>
+<span class="ansi-green-fg">   1689</span> <span style="font-style:italic;color:rgb(95,135,135)"># TODO: What to do when arr1d = [1, np.nan] and weights = [0, 1]?</span>
+<span class="ansi-green-fg">-&gt; </span><span class="ansi-green-fg">1690</span> arr1d, weights, overwrite_input = _remove_nan_1d(arr1d,
+<span class="ansi-green-fg">   1691</span>     second_arr1d=weights, overwrite_input=overwrite_input)
+<span class="ansi-green-fg">   1692</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> arr1d.size == <span class="ansi-green-fg">0</span>:
+<span class="ansi-green-fg">   1693</span>     <span style="font-style:italic;color:rgb(95,135,135)"># convert to scalar</span>
+<span class="ansi-green-fg">   1694</span>     <span style="font-weight:bold;color:rgb(0,135,0)">return</span> np.full(q.shape, np.nan, dtype=arr1d.dtype)[()]
+
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~\anaconda3\envs\geospatial\Lib\site-packages\numpy\lib\_nanfunctions_impl.py:187</span>, in <span class="ansi-cyan-fg">_remove_nan_1d</span><span class="ansi-blue-fg">(arr1d, second_arr1d, overwrite_input)</span>
+<span class="ansi-green-fg">    185</span> <span style="font-weight:bold;color:rgb(0,135,0)">else</span>:
+<span class="ansi-green-fg">    186</span>     <span style="font-weight:bold;color:rgb(0,135,0)">if</span> <span style="font-weight:bold;color:rgb(175,0,255)">not</span> overwrite_input:
+<span class="ansi-green-fg">--&gt; </span><span class="ansi-green-fg">187</span>         arr1d = arr1d.copy()
+<span class="ansi-green-fg">    188</span>     <span style="font-style:italic;color:rgb(95,135,135)"># select non-nans at end of array</span>
+<span class="ansi-green-fg">    189</span>     enonan = arr1d[-s.size:][~c[-s.size:]]
+
+<span class="ansi-red-fg">MemoryError</span>: Unable to allocate 13.3 GiB for an array with shape (3573826920,) and data type float32</pre>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01_data_preprocessing_files/figure-html/cell-13-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="71a31f6f-ff03-4a93-8c09-592ae03e9486" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate summary statistics</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"="</span><span class="op">*</span><span class="dv">60</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"DATA PREPROCESSING SUMMARY"</span>)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"="</span><span class="op">*</span><span class="dv">60</span>)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">📍 Study Area: Honolulu County"</span>)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"   CRS: </span><span class="sc">{</span>TARGET_CRS<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"   Area: </span><span class="sc">{</span>honolulu<span class="sc">.</span>geometry<span class="sc">.</span>area<span class="sc">.</span>values[<span class="dv">0</span>]<span class="op">/</span><span class="fl">1e6</span><span class="sc">:.2f}</span><span class="ss"> km²"</span>)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss"> Waterways:"</span>)</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"   Features: </span><span class="sc">{</span><span class="bu">len</span>(waterways_honolulu)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"   Total length: </span><span class="sc">{</span>waterways_honolulu<span class="sc">.</span>length<span class="sc">.</span><span class="bu">sum</span>()<span class="op">/</span><span class="dv">1000</span><span class="sc">:.2f}</span><span class="ss"> km"</span>)</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss"> Lines/Coastline:"</span>)</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"   Features: </span><span class="sc">{</span><span class="bu">len</span>(lines_honolulu)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"   Total length: </span><span class="sc">{</span>lines_honolulu<span class="sc">.</span>length<span class="sc">.</span><span class="bu">sum</span>()<span class="op">/</span><span class="dv">1000</span><span class="sc">:.2f}</span><span class="ss"> km"</span>)</span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss"> Census Block Groups:"</span>)</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"   Count: </span><span class="sc">{</span><span class="bu">len</span>(census_bg_honolulu)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"   Total population: </span><span class="sc">{</span>census_bg_honolulu[<span class="st">'total_population'</span>]<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:,}</span><span class="ss">"</span>)</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"   Avg population per BG: </span><span class="sc">{</span>census_bg_honolulu[<span class="st">'total_population'</span>]<span class="sc">.</span>mean()<span class="sc">:.0f}</span><span class="ss">"</span>)</span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> rasterio.<span class="bu">open</span>(reprojected_dem_path) <span class="im">as</span> src:</span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>    dem_data <span class="op">=</span> src.read(<span class="dv">1</span>)</span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>    dem_data <span class="op">=</span> dem_data[dem_data <span class="op">!=</span> <span class="op">-</span><span class="dv">9999</span>]</span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss"> Digital Elevation Model:"</span>)</span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"   Resolution: </span><span class="sc">{</span>src<span class="sc">.</span>res[<span class="dv">0</span>]<span class="sc">:.1f}</span><span class="ss">m × </span><span class="sc">{</span>src<span class="sc">.</span>res[<span class="dv">1</span>]<span class="sc">:.1f}</span><span class="ss">m"</span>)</span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"   Dimensions: </span><span class="sc">{</span>src<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> × </span><span class="sc">{</span>src<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> pixels"</span>)</span>
+<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"   Elevation range: </span><span class="sc">{</span>dem_data<span class="sc">.</span><span class="bu">min</span>()<span class="sc">:.1f}</span><span class="ss">m to </span><span class="sc">{</span>dem_data<span class="sc">.</span><span class="bu">max</span>()<span class="sc">:.1f}</span><span class="ss">m"</span>)</span>
+<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"   Mean elevation: </span><span class="sc">{</span>dem_data<span class="sc">.</span>mean()<span class="sc">:.1f}</span><span class="ss">m"</span>)</span>
+<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">✓ All data successfully preprocessed and ready for analysis"</span>)</span>
+<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"="</span><span class="op">*</span><span class="dv">60</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>============================================================
+DATA PREPROCESSING SUMMARY
+============================================================
+
+📍 Study Area: Honolulu County
+   CRS: EPSG:3759
+   Area: 61973.65 km²
+
+🌊 Waterways:
+   Features: 2340
+   Total length: 7849.08 km
+
+🏖️ Lines/Coastline:
+   Features: 4
+   Total length: 1316.63 km
+
+🏘️ Census Block Groups:
+   Count: 774
+   Total population: 2,163,336
+   Avg population per BG: 2795</code></pre>
+</div>
+<div class="cell-output cell-output-error">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">MemoryError</span>                               Traceback (most recent call last)
+<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[13]</span><span class="ansi-green-fg">, line 24</span>
+<span class="ansi-green-fg">     21</span> <span style="color:rgb(0,135,0)">print</span>(<span class="ansi-yellow-fg">f</span><span class="ansi-yellow-fg">"</span><span class="ansi-yellow-fg">   Avg population per BG: </span><span style="font-weight:bold;color:rgb(175,95,135)">{</span>census_bg_honolulu[<span class="ansi-yellow-fg">'</span><span class="ansi-yellow-fg">total_population</span><span class="ansi-yellow-fg">'</span>].mean()<span style="font-weight:bold;color:rgb(175,95,135)">:</span><span class="ansi-yellow-fg">.0f</span><span style="font-weight:bold;color:rgb(175,95,135)">}</span><span class="ansi-yellow-fg">"</span>)
+<span class="ansi-green-fg">     23</span> <span style="font-weight:bold;color:rgb(0,135,0)">with</span> rasterio.open(reprojected_dem_path) <span style="font-weight:bold;color:rgb(0,135,0)">as</span> src:
+<span class="ansi-green-fg">---&gt; </span><span class="ansi-green-fg">24</span>     dem_data = src.read(<span class="ansi-green-fg">1</span>)
+<span class="ansi-green-fg">     25</span>     dem_data = dem_data[dem_data != -<span class="ansi-green-fg">9999</span>]
+<span class="ansi-green-fg">     27</span>     <span style="color:rgb(0,135,0)">print</span>(<span class="ansi-yellow-fg">f</span><span class="ansi-yellow-fg">"</span><span style="font-weight:bold;color:rgb(175,95,0)">\n</span><span class="ansi-yellow-fg">⛰️ Digital Elevation Model:</span><span class="ansi-yellow-fg">"</span>)
+
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">rasterio\\_io.pyx:620</span>, in <span class="ansi-cyan-fg">rasterio._io.DatasetReaderBase.read</span><span class="ansi-blue-fg">()</span>
+
+<span class="ansi-red-fg">MemoryError</span>: Unable to allocate 13.3 GiB for an array with shape (1, 52758, 67740) and data type float32</pre>
+</div>
+</div>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

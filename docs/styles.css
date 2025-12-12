@@ -1,0 +1,155 @@
+/* High Tide Ahead - Custom Styles */
+
+/* Color palette - ocean/coastal theme */
+:root {
+  --primary-blue: #1a5276;
+  --light-blue: #85c1e9;
+  --accent-teal: #148f77;
+  --warning-orange: #e67e22;
+  --danger-red: #c0392b;
+  --light-gray: #f8f9fa;
+}
+
+/* Hero section on home page */
+.hero-banner {
+  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-teal) 100%);
+  color: white;
+  padding: 3rem 2rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.hero-banner h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.hero-banner .subtitle {
+  font-size: 1.3rem;
+  opacity: 0.9;
+}
+
+/* Key statistics boxes */
+.stat-box {
+  background: var(--light-gray);
+  border-left: 4px solid var(--primary-blue);
+  padding: 1rem 1.5rem;
+  margin: 1rem 0;
+  border-radius: 0 8px 8px 0;
+}
+
+.stat-box.high-risk {
+  border-left-color: var(--danger-red);
+}
+
+.stat-box.moderate-risk {
+  border-left-color: var(--warning-orange);
+}
+
+.stat-box.low-risk {
+  border-left-color: var(--accent-teal);
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--primary-blue);
+}
+
+/* Figure captions */
+.figure-caption {
+  font-style: italic;
+  color: #666;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+/* Methodology flow diagram styling */
+.method-step {
+  background: white;
+  border: 2px solid var(--light-blue);
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 0.5rem 0;
+}
+
+.method-step h4 {
+  color: var(--primary-blue);
+  margin-bottom: 0.5rem;
+}
+
+/* Risk category colors for inline use */
+.risk-high { color: var(--danger-red); font-weight: bold; }
+.risk-moderate { color: var(--warning-orange); font-weight: bold; }
+.risk-low { color: var(--accent-teal); font-weight: bold; }
+
+/* Table styling */
+table {
+  width: 100%;
+  margin: 1rem 0;
+}
+
+table th {
+  background: var(--primary-blue);
+  color: white;
+  padding: 0.75rem;
+}
+
+table td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #ddd;
+}
+
+table tr:hover {
+  background: var(--light-gray);
+}
+
+/* Callout boxes */
+.callout-note {
+  border-left-color: var(--primary-blue);
+}
+
+.callout-warning {
+  border-left-color: var(--warning-orange);
+}
+
+.callout-important {
+  border-left-color: var(--danger-red);
+}
+
+/* Interactive map container */
+.map-container {
+  width: 100%;
+  height: 600px;
+  border: 2px solid var(--light-blue);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 1rem 0;
+}
+
+/* Responsive images */
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+/* Footer styling */
+.page-footer {
+  background: var(--primary-blue);
+  color: white;
+  padding: 1rem;
+  margin-top: 2rem;
+}
+
+/* Code block styling */
+pre {
+  background: #f4f4f4;
+  border-radius: 4px;
+  padding: 1rem;
+}
+
+/* Navigation active state */
+.nav-link.active {
+  border-bottom: 3px solid var(--light-blue);
+}
