@@ -7,7 +7,6 @@ data/
 
 # Generated outputs (keep only figures)
 outputs/maps/
-outputs/data/
 
 # Quarto cache
 .quarto/

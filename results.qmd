@@ -25,9 +25,10 @@ The top 5 highest-risk block groups are marked with stars. High-risk areas conce
 
 | Risk Category | Population | Percent |
 |---------------|------------|---------|
-| High | 106,846 | 11.2% |
-| Moderate | 160,225 | 16.8% |
-| Low | 686,450 | 72.0% |
+| High | 106,846 | 10.9% |
+| Moderate | 160,225 | 16.4% |
+| Low | 686,450 | 70.1% |
+| **Total** | **979,682** | **100%** |
 
 ### By Land Area
 
@@ -45,11 +46,10 @@ The disparity between land area and population percentages reflects that high-ri
 
 ### Key Statistics
 
-- **Total Population Analyzed:** 886,849
-- **High Risk Exposure:** 86,462 (9.7%)
-- **Block Groups Analyzed:** 703
-- **Mean Risk Score:** 1.37 / 3.0
-- **High Risk Area:** 4,263.1 km²
+- **Total Population Analyzed:** 979,682
+- **High Risk Exposure:** 106,846 (10.9%)
+- **Block Groups Analyzed:** 773
+- **Mean Risk Score:** 1.39 / 3.0
 
 ## Top High-Risk Areas
 
@@ -86,11 +86,11 @@ The interactive map allows detailed exploration of flood risk across Oahu. Featu
 ::: {.callout-important}
 ## Summary Findings
 
-1. **86,462 residents** (9.7% of Oahu's population) live in high flood risk areas
+1. **106,846 residents** (10.9% of the population) live in high flood risk areas
 2. High-risk areas concentrate along the **southern coastal plain** and **windward valley floors**
 3. The **elevation component** drives most of the risk classification on this island geography
 4. **Stream proximity** adds localized high-risk corridors inland from the coast
-5. Mean risk score of **1.37** indicates most block groups are relatively low-risk
+5. Mean risk score of **1.39** indicates most block groups are relatively low-risk
 :::
 
 ## Limitations
