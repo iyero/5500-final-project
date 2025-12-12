@@ -1,0 +1,45 @@
+{
+  "total_population": 979682,
+  "population_high_risk": 106846,
+  "population_moderate_risk": 160225,
+  "population_low_risk": 686450,
+  "percent_high_risk": 10.91,
+  "block_groups_total": 773,
+  "mean_risk_score": 1.39,
+  "median_risk_score": 1.14,
+  "area_high_risk_km2": 4263.11,
+  "area_moderate_risk_km2": 1803.68,
+  "area_low_risk_km2": 8750.69,
+  "top_5_highest_risk": [
+    {
+      "geoid": "150039900010",
+      "population": 0,
+      "risk_score": 3.0,
+      "percent_high_risk": 100.0
+    },
+    {
+      "geoid": "150030098032",
+      "population": 543,
+      "risk_score": 2.9,
+      "percent_high_risk": 92.8
+    },
+    {
+      "geoid": "150030096103",
+      "population": 500,
+      "risk_score": 2.89,
+      "percent_high_risk": 90.0
+    },
+    {
+      "geoid": "150030097073",
+      "population": 1495,
+      "risk_score": 2.86,
+      "percent_high_risk": 88.8
+    },
+    {
+      "geoid": "150030037034",
+      "population": 0,
+      "risk_score": 2.83,
+      "percent_high_risk": 87.0
+    }
+  ]
+}

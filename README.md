@@ -24,12 +24,38 @@ This project develops a composite flood risk model for Oahu, Hawaii, combining e
 │   ├── 02_flood_risk_modeling.ipynb
 │   ├── 03_population_exposure.ipynb
 │   └── 04_visualization.ipynb
-├── outputs/figures/           # Static visualizations
+├── outputs/
+│   ├── figures/               # Static visualizations
+│   └── data/                  # Output spreadsheets (CSV)
+│       ├── population_exposure.csv
+│       ├── exposure_summary.csv
+│       └── summary_statistics.json
 ├── docs/                      # Quarto website (GitHub Pages)
 ├── *.qmd                      # Quarto source files
 ├── _quarto.yml                # Quarto configuration
 └── styles.css                 # Custom styling
 ```
+
+## Data Note
+
+**Raw and processed geospatial data are not included in this repository due to GitHub file size limits.** The DEM file alone exceeds 4 GB. However, all data is freely available and easily reproducible:
+
+### Data Sources & Downloads
+
+| Dataset | Source | Download |
+|---------|--------|----------|
+| Digital Elevation Model | USGS 3DEP | [National Map Downloader](https://apps.nationalmap.gov/downloader/) |
+| Streams & Rivers | USGS NHD | [National Map Downloader](https://apps.nationalmap.gov/downloader/) |
+| Coastline | USGS NHD | [National Map Downloader](https://apps.nationalmap.gov/downloader/) |
+| Census Block Groups | Census TIGER/Line | [Census Bureau](https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html) |
+| Population Data | ACS 2020 5-Year | [Census API](https://www.census.gov/data/developers/data-sets/acs-5year.html) |
+
+### Reproducing the Data
+
+1. Download raw data from the sources above
+2. Place files in `data/raw/`
+3. Run `script/01_data_preprocessing.ipynb` to generate processed files
+4. Run notebooks 02-04 in sequence
 
 ## Methodology
 
@@ -40,11 +66,13 @@ This project develops a composite flood risk model for Oahu, Hawaii, combining e
 | **Resolution** | 10m grid cells |
 | **Study Area** | Oahu, Honolulu County (703 census block groups) |
 
-## Data Sources
+## Output Spreadsheets
 
-- **Elevation:** USGS 3D Elevation Program (3DEP)
-- **Hydrography:** USGS National Hydrography Dataset (NHD)
-- **Demographics:** US Census Bureau TIGER/Line & ACS 2020 5-Year Estimates
+| File | Description |
+|------|-------------|
+| `population_exposure.csv` | Block group-level flood risk metrics and population exposure |
+| `exposure_summary.csv` | Aggregate statistics by risk category |
+| `summary_statistics.json` | Key findings in JSON format |
 
 ## Author
 
