@@ -1,0 +1,46 @@
+# ===========================================
+# EXCLUDE EVERYTHING THAT CAN BE REGENERATED
+# ===========================================
+
+# Large data files - ALL of them
+data/
+
+# Generated outputs (keep only figures)
+outputs/maps/
+outputs/data/
+
+# Generated docs (regenerate with quarto render)
+docs/
+
+# Quarto cache
+.quarto/
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Archives
+*.zip
+
+# Large rasters
+*.tif
+*.tif.ovr
+*.TIF
+
+# GeoJSON (can be large)
+*.geojson
+
+# ===========================================
+# WHAT GETS UPLOADED (everything else):
+# - *.qmd files (Quarto source)
+# - *.ipynb files (notebooks) 
+# - _quarto.yml, styles.css
+# - outputs/figures/*.png
+# - README.md
+# - .gitignore
+# ===========================================

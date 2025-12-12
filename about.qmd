@@ -1,0 +1,71 @@
+---
+title: "About"
+subtitle: "Project Context and Acknowledgments"
+---
+
+## Project Context
+
+This analysis was developed as the final project for **MUSA 5500: Geospatial Data Science in Python** at the University of Pennsylvania Weitzman School of Design.
+
+The project demonstrates proficiency in:
+
+- Raster analysis and terrain processing
+- Integration of multiple geospatial data sources
+- Zonal statistics and demographic analysis
+- Interactive web mapping
+- Reproducible research workflows
+
+## Why Honolulu?
+
+Honolulu County presents a compelling case study for flood risk analysis:
+
+- **Personal connection:** I grew up on Oahu and have seen firsthand how flooding affects island communities
+- **Island geography** creates a bounded study area with clear coastal exposure
+- **Diverse terrain** from sea level to 1,200m+ within a compact area
+- **Dense population** concentrated in low-lying coastal zones
+- **Real policy relevance** given climate change and sea level rise projections
+- **High-quality data** availability from USGS and Census
+
+## Data Sources
+
+| Dataset | Source | Access |
+|---------|--------|--------|
+| Digital Elevation Model | USGS 3DEP | [National Map](https://apps.nationalmap.gov/downloader/) |
+| Hydrography | USGS NHD | [National Map](https://apps.nationalmap.gov/downloader/) |
+| Census Boundaries | Census TIGER/Line | [Census Bureau](https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html) |
+| Population Data | ACS 2020 5-Year | [Census API](https://www.census.gov/data/developers/data-sets/acs-5year.html) |
+
+## Limitations & Future Work
+
+### Current Limitations
+
+- **Static risk model:** Does not incorporate probabilistic flood modeling or climate projections
+- **Population distribution:** Assumes uniform distribution within block groups
+- **Single hazard focus:** Does not address other hazards (tsunami, wildfire, etc.)
+
+### Potential Extensions
+
+- Incorporate NOAA sea level rise projections
+- Add FEMA flood zone data as validation layer
+- Model population change scenarios
+- Conduct evacuation route analysis
+- Compare with insurance claims or historical flood records
+
+## Author
+
+**Oliver Iyer**
+
+Master of Public Administration in Quantitative Policy Analysis Candidate  
+University of Pennsylvania, Fels Institute of Government
+
+- [LinkedIn](https://www.linkedin.com/in/oliver-iyer24/)
+
+## Acknowledgments
+
+- **Instructor:** Xiaojiang Li
+- **Data Providers:** USGS, US Census Bureau
+- **Tools:** Python open-source geospatial community
+
+---
+
+*December 2025*

@@ -1,0 +1,105 @@
+---
+title: "Results"
+subtitle: "Flood Risk Mapping and Population Exposure Findings"
+---
+
+## Risk Model Components
+
+The flood risk model combines elevation and proximity to inland waterways, weighted 70% and 30% respectively.
+
+![Flood Risk Model Components](outputs/figures/flood_risk_components.png)
+
+Panel (A) shows the digital elevation model, with the Ko'olau and Wai'anae mountain ranges clearly visible. Panel (B) classifies elevation into risk categories. Panel (C) shows proximity risk based on distance to streams and rivers (coastline excluded). Panel (D) presents the final composite risk classification.
+
+## Comprehensive Risk Map
+
+![Comprehensive Flood Risk Assessment](outputs/figures/10_comprehensive_risk_map.png)
+
+The top 5 highest-risk block groups are marked with stars. High-risk areas concentrate along the southern coastal plain (Waikiki, Ala Moana, Pearl Harbor) and in windward valley floors.
+
+## Population Exposure
+
+![Population Flood Risk Exposure Analysis](outputs/figures/population_exposure.png)
+
+### By Population
+
+| Risk Category | Population | Percent |
+|---------------|------------|---------|
+| High | 106,846 | 11.2% |
+| Moderate | 160,225 | 16.8% |
+| Low | 686,450 | 72.0% |
+
+### By Land Area
+
+| Risk Category | Percent of Land |
+|---------------|-----------------|
+| High | 28.8% |
+| Moderate | 12.2% |
+| Low | 59.1% |
+
+The disparity between land area and population percentages reflects that high-risk coastal areas tend to be less densely populated than inland urban zones.
+
+## Dashboard Summary
+
+![Flood Risk Dashboard](outputs/figures/11_dashboard_summary.png)
+
+### Key Statistics
+
+- **Total Population Analyzed:** 886,849
+- **High Risk Exposure:** 86,462 (9.7%)
+- **Block Groups Analyzed:** 703
+- **Mean Risk Score:** 1.37 / 3.0
+- **High Risk Area:** 4,263.1 km²
+
+## Top High-Risk Areas
+
+The following census block groups have the highest composite risk scores:
+
+| Rank | Block Group | Population | Risk Score |
+|------|-------------|------------|------------|
+| 1 | 900010 | 0 | 3.00 |
+| 2 | 037034 | 0 | 2.83 |
+| 3 | 001083 | 1,296 | 2.82 |
+| 4 | 802001 | 537 | 2.80 |
+| 5 | 012022 | 1,104 | 2.75 |
+
+Note: Block groups with zero population are typically parks, industrial areas, or military installations.
+
+## Legend Reference
+
+![Map Legend](outputs/figures/12_legends.png)
+
+## Interactive Exploration
+
+The interactive map allows detailed exploration of flood risk across Oahu. Features include:
+
+- **Toggle layers:** Switch between risk score and population exposure views
+- **Click for details:** View block group statistics in popup windows
+- **High-risk markers:** Top 10 highest-risk block groups marked with warning icons
+
+```{=html}
+<iframe src="outputs/maps/flood_risk_interactive_map.html" width="100%" height="600px" style="border: 2px solid #85c1e9; border-radius: 8px;"></iframe>
+```
+
+## Key Takeaways
+
+::: {.callout-important}
+## Summary Findings
+
+1. **86,462 residents** (9.7% of Oahu's population) live in high flood risk areas
+2. High-risk areas concentrate along the **southern coastal plain** and **windward valley floors**
+3. The **elevation component** drives most of the risk classification on this island geography
+4. **Stream proximity** adds localized high-risk corridors inland from the coast
+5. Mean risk score of **1.37** indicates most block groups are relatively low-risk
+:::
+
+## Limitations
+
+Several factors affect interpretation of these results:
+
+- **Uniform population assumption:** Population is allocated proportionally by area, not actual residential density
+- **Static analysis:** Does not account for future sea level rise or development changes
+- **No storm modeling:** Risk categories are based on physical exposure, not probabilistic flood modeling
+- **Resolution tradeoffs:** 10m resolution balances detail with computational feasibility
+
+See [Methodology](methodology.qmd) for additional technical details.
