@@ -1,6 +1,6 @@
 # High Tide Ahead
 
-**Flood Risk and Population Exposure in Honolulu County, Hawaii**
+**Flood Risk and Population Exposure on Oahu, Hawaii**
 
 🌐 **[View the Project Website](https://iyero.github.io/5500-final-project/)**
 
@@ -10,10 +10,11 @@
 
 This project develops a composite flood risk model for Oahu, Hawaii, combining elevation data and proximity to inland waterways to identify flood-prone areas and estimate population exposure across approximately 887,000 residents.
 
-## Key Findings
+## Key Findings (Oahu Only)
 
 - **86,462 residents** (9.7%) live in high flood risk areas
 - **142,190 residents** (16.0%) live in moderate flood risk areas
+- **632,045 residents** (71.3%) live in low flood risk areas
 - High-risk areas concentrate along the southern coastal plain and windward valley floors
 
 ## Repository Contents
@@ -38,7 +39,11 @@ This project develops a composite flood risk model for Oahu, Hawaii, combining e
 
 ## Data Note
 
-**Raw and processed geospatial data are not included in this repository due to GitHub file size limits.** The DEM file alone exceeds 4 GB. However, all data is freely available and easily reproducible:
+**Raw and processed geospatial data are not included in this repository due to GitHub file size limits.** The DEM file alone exceeds 4 GB. However, all data is freely available and easily reproducible.
+
+### Oahu vs. Honolulu County
+
+Honolulu County includes the Northwestern Hawaiian Islands in addition to Oahu. The CSV files in `outputs/data/` contain data for **all of Honolulu County** (773 block groups, 979,682 residents). The visualizations and figures on the website are **subsetted to Oahu only** (703 block groups, 886,849 residents) to focus on the main populated island.
 
 ### Data Sources & Downloads
 
@@ -64,15 +69,15 @@ This project develops a composite flood risk model for Oahu, Hawaii, combining e
 | **Elevation Risk (70%)** | High: <3m, Moderate: 3-8m, Low: >8m |
 | **Proximity Risk (30%)** | High: <100m from waterway, Moderate: 100-500m, Low: >500m |
 | **Resolution** | 10m grid cells |
-| **Study Area** | Oahu, Honolulu County (703 census block groups) |
+| **Study Area** | Oahu (703 census block groups) |
 
 ## Output Spreadsheets
 
 | File | Description |
 |------|-------------|
-| `population_exposure.csv` | Block group-level flood risk metrics and population exposure |
-| `exposure_summary.csv` | Aggregate statistics by risk category |
-| `summary_statistics.json` | Key findings in JSON format |
+| `population_exposure.csv` | Block group-level flood risk metrics and population exposure (all Honolulu County) |
+| `exposure_summary.csv` | Aggregate statistics by risk category (all Honolulu County) |
+| `summary_statistics.json` | Key findings in JSON format (all Honolulu County) |
 
 ## Author
 
